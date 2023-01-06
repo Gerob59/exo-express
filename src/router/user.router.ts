@@ -13,10 +13,10 @@ console.log(user.date_inscription);
 
 const router = Express.Router();
 router.get("/", controller.getAll);
-// router.get("/:id", controller.getById);
-// router.delete("/:id", controller.deleteById);
-// router.post("/", controller.create);
-// router.put("/:id", controller.update);
+router.get("/:id", controller.getById);
+router.post("/", controller.create);
+router.delete("/:id", controller.deleteById);
+router.put("/:id", controller.update);
 // router.patch("/:id", controller.patch);
 
 export default router;

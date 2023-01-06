@@ -12,9 +12,39 @@ export default class UserService {
     return this.repository.getAll();
   };
 
-  //   getById = (id: number): Promise<UserModel> => {};
-  //   deleteById = (id: number): Promise<any> => {};
-  //   create = (nom: string, prenom: string): Promise<UserModel> => {};
-  //   update = (): Promise<UserModel> => {};
+  getById = (id: number): Promise<UserModel> => {
+    return this.repository.getById(id);
+  };
+
+  create = (
+    nom: string,
+    prenom: string,
+    date_de_naissance?: string,
+    nationalite?: string
+  ): Promise<UserModel> => {
+    const user: UserModel = new UserModel(
+      nom,
+      prenom,
+      date_de_naissance,
+      nationalite
+    );
+    return this.repository.create(user);
+  };
+
+  deleteById = (id: number): Promise<any> => {
+    return this.repository.deleteById(id);
+  };
+
+  update = (id: number, user: UserModel): Promise<UserModel> => {
+    if (user.id !== id) throw "object corrompted";
+    const data: UserModel = new UserModel(user.nom, user.prenom);
+    if (user === data) {
+      return this.repository.create(data);
+    } else {
+      data.update(user as UserModel);
+      return this.repository.update(data).catch((err) => err);
+    }
+  };
+
   //   patch = (): Promise<UserModel> => {};
 }

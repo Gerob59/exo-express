@@ -9,9 +9,24 @@ export default class UserRepository {
     return axios.get(`${this.URL}`).then((res) => res.data);
   };
 
-  //   getById = async (id: number): Promise<UserModel> => {};
-  //   create = async (todo: UserModel): Promise<UserModel> => {};
-  //   update = async (todo: UserModel): Promise<UserModel> => {};
-  //   deleteById = (id: number): Promise<any> => {};
+  getById = async (id: number): Promise<UserModel> => {
+    return axios
+      .get(`${this.URL}/${id}`)
+      .then((res) => res.data)
+      .catch(() => "id not found");
+  };
+
+  create = async (user: UserModel): Promise<UserModel> => {
+    return axios.post(`${this.URL}`, user);
+  };
+
+  deleteById = (id: number): Promise<any> => {
+    return axios.delete(`${this.URL}/${id}`).then((res) => res.data);
+  };
+
+  update = async (user: UserModel): Promise<UserModel> => {
+    return axios.put(`${this.URL}/${user.id}`, user).then((res) => res.data);
+  };
+
   //   patch = async (id: number, todo: UserModel): Promise<UserModel> => {};
 }
