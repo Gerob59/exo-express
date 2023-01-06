@@ -1,0 +1,12 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "nom": "hotton",
+      "prenom": "robin",
+      "date_de_naissance": "28 janvier 2000",
+      "date_inscription": "06/01/2023 11:11:11",
+      "nationalite": "francais"
+    }
+  ]
+}
