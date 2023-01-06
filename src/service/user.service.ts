@@ -8,7 +8,10 @@ export default class UserService {
     this.repository = repository;
   }
 
-  //   getAll = (): Promise<UserModel[]> => {};
+  getAll = (): Promise<UserModel[]> => {
+    return this.repository.getAll();
+  };
+
   //   getById = (id: number): Promise<UserModel> => {};
   //   deleteById = (id: number): Promise<any> => {};
   //   create = (nom: string, prenom: string): Promise<UserModel> => {};

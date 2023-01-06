@@ -1,4 +1,9 @@
-export default class TodoModelPersistant {
+/**
+ * containtes :
+ * date de naissance / nationalité sont facultatives
+ * la date de naissance doit etre au format dd/mm/yyyy hh:mm:ss
+ */
+export default class UserModel {
   id!: number;
   [nom: string]: any;
   prenom!: string;
@@ -18,19 +23,18 @@ export default class TodoModelPersistant {
   create = (
     nom: string,
     prenom: string,
-    date_naissance?: string,
+    date_de_naissance?: string,
     nationalite?: string
   ) => {
     this.nom = nom;
     this.prenom = prenom;
-    this.date_inscription = "" + new Date(Date.now()).getUTCDate();
-    this.date_de_naissance = date_naissance || "";
+    this.date_inscription = this.setDateInscription();
+    this.date_de_naissance = date_de_naissance || "";
     this.nationalite = nationalite || "";
   };
 
   update = (obj: any) => {
     const checkAttribute: string[] = [
-      "id",
       "nom",
       "prenom",
       "date_de_naissance",
@@ -41,5 +45,17 @@ export default class TodoModelPersistant {
         this[key] = obj[key];
       }
     }
+  };
+
+  private setDateInscription = (): string => {
+    const d: Date = new Date(Date.now());
+    const dformat: string = `
+      ${[d.getDate(), d.getMonth() + 1, d.getFullYear()].join("/")} ${[
+      d.getHours(),
+      d.getMinutes(),
+      d.getSeconds(),
+    ].join(":")}`;
+
+    return dformat;
   };
 }
