@@ -1,3 +1,5 @@
+import { create } from "domain";
+
 /**
  * containtes :
  * date de naissance / nationalité sont facultatives
@@ -5,7 +7,7 @@
  */
 export default class UserModel {
   id!: number;
-  [nom: string]: any;
+  nom: string;
   prenom: string;
   date_inscription!: string;
   date_de_naissance?: string;
@@ -20,16 +22,9 @@ export default class UserModel {
     this.nom = nom;
     this.prenom = prenom;
     this.date_inscription = this.setDateInscription();
-    this.date_de_naissance = date_de_naissance || "";
-    this.nationalite = nationalite || "";
+    this.date_de_naissance = date_de_naissance;
+    this.nationalite = nationalite;
   }
-
-  update = (user: UserModel) => {
-    if (user.nom) this.nom = user.nom;
-    if (user.prenom) this.prenom = user.prenom;
-    if (user.date_de_naissance) this.date_de_naissance = user.date_de_naissance;
-    if (user.nationalite) this.nationalite = user.nationalite;
-  };
 
   private setDateInscription = (): string => {
     const d: Date = new Date(Date.now());

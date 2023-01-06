@@ -17,7 +17,7 @@ export default class UserRepository {
   };
 
   create = async (user: UserModel): Promise<UserModel> => {
-    return axios.post(`${this.URL}`, user);
+    return axios.post(`${this.URL}`, user).then((res) => res.data);
   };
 
   deleteById = (id: number): Promise<any> => {
@@ -28,5 +28,7 @@ export default class UserRepository {
     return axios.put(`${this.URL}/${user.id}`, user).then((res) => res.data);
   };
 
-  //   patch = async (id: number, todo: UserModel): Promise<UserModel> => {};
+  patch = async (id: number, user: UserModel): Promise<UserModel> => {
+    return axios.patch(`${this.URL}/${id}`, user).then((res) => res.data);
+  };
 }

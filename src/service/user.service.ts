@@ -16,35 +16,36 @@ export default class UserService {
     return this.repository.getById(id);
   };
 
-  create = (
-    nom: string,
-    prenom: string,
-    date_de_naissance?: string,
-    nationalite?: string
-  ): Promise<UserModel> => {
-    const user: UserModel = new UserModel(
-      nom,
-      prenom,
-      date_de_naissance,
-      nationalite
+  create = (user: UserModel): Promise<UserModel> => {
+    const item: UserModel = new UserModel(
+      user.nom,
+      user.prenom,
+      user.date_de_naissance,
+      user.nationalite
     );
-    return this.repository.create(user);
+    return this.repository.create(item);
   };
 
   deleteById = (id: number): Promise<any> => {
     return this.repository.deleteById(id);
   };
 
-  update = (id: number, user: UserModel): Promise<UserModel> => {
+  update = async (id: number, user: UserModel): Promise<UserModel> => {
     if (user.id !== id) throw "object corrompted";
-    const data: UserModel = new UserModel(user.nom, user.prenom);
-    if (user === data) {
-      return this.repository.create(data);
+    let item = await this.getById(id);
+    if (!item) {
+      return this.create(user);
     } else {
-      data.update(user as UserModel);
-      return this.repository.update(data).catch((err) => err);
+      return this.update(id, user).catch((err) => err);
     }
   };
 
-  //   patch = (): Promise<UserModel> => {};
+  patch = async (id: number, user: UserModel): Promise<UserModel> => {
+    const item: UserModel = await this.getById(id);
+    item.nom = user.nom;
+    item.prenom = user.prenom;
+    item.date_de_naissance = user.date_de_naissance;
+    item.nationalite = user.nationalite;
+    return this.repository.patch(id, item).catch((err) => err);
+  };
 }

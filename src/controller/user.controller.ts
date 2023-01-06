@@ -21,19 +21,8 @@ export default class UserController {
   };
 
   public create = async (req: Request, res: Response): Promise<void> => {
-    const nom: string = req.body.nom;
-    const prenom: string = req.body.prenom;
-    const date_de_naissance: string = req.body.date_de_naissance;
-    const nationalite: string = req.body.nationalite;
-
-    const data: UserModel = await this.service.create(
-      nom,
-      prenom,
-      date_de_naissance,
-      nationalite
-    );
-    console.log(data);
-
+    const body: UserModel = req.body;
+    const data: UserModel = await this.service.create(body);
     res.send(data);
   };
 
@@ -56,9 +45,14 @@ export default class UserController {
       const data = await this.service.update(id, todo);
       res.send(data);
     } catch (err) {
-      res.send(err);
+      res.send("you cannot update that");
     }
   };
 
-  //   public patch = async (req: Request, res: Response): Promise<void> => {};
+  public patch = async (req: Request, res: Response): Promise<void> => {
+    const id: number = +req.params.id;
+    const todo: UserModel = req.body;
+    const data = await this.service.patch(id, todo);
+    res.send(data);
+  };
 }
